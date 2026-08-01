@@ -3,27 +3,38 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Wpedantic -std=c17 -g -Iinclude
 LDFLAGS = -pthread
 
-TARGET = threadpool
-
-SRC = \
-	src/main.c \
+LIB_SRC = \
 	src/queue.c \
-	src/thread_pool.c 
+	src/thread_pool.c
 
-OBJ = $(SRC:.c=.o)
+LIB_OBJ = $(LIB_SRC:.c=.o)
 
-all: $(TARGET)
+EXAMPLE_SRC = examples/example.c
+EXAMPLE_TARGET = examples/example
 
-$(TARGET): $(OBJ)
-	$(CC) $(OBJ) -o $(TARGET) $(LDFLAGS)
+TEST_SRC = tests/test_thread_pool.c
+TEST_TARGET = tests/test_thread_pool
+
+all: $(EXAMPLE_TARGET)
+
+$(EXAMPLE_TARGET): $(EXAMPLE_SRC) $(LIB_OBJ)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
+
+$(TEST_TARGET): $(TEST_SRC) $(LIB_OBJ)
+	$(CC) $(CFLAGS) $^ -o $@ $(LDFLAGS)
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
+example: $(EXAMPLE_TARGET)
+	./$(EXAMPLE_TARGET)
+
+test: $(TEST_TARGET)
+	./$(TEST_TARGET)
+
 clean:
-	rm -f $(OBJ) $(TARGET)
+	rm -f $(LIB_OBJ)
+	rm -f $(EXAMPLE_TARGET)
+	rm -f $(TEST_TARGET)
 
-run: $(TARGET)
-	./$(TARGET)
-
-.PHONY: all clean run
+.PHONY: all example test clean
