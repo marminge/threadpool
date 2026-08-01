@@ -18,12 +18,24 @@ The library manages a fixed number of worker threads that execute submitted task
 ```
 include/
     thread_pool.h
+    queue.h
+    task.h
+
 
 
 src/
     thread_pool.c
     queue.c
-    main.c
+
+
+
+examples/
+    example.c
+
+
+
+tests/
+    test_thread_pool.c
 ```
 
 ## Building
@@ -35,7 +47,13 @@ make
 Run the example program:
 
 ```bash
-make run
+make example
+```
+
+Run tests:
+
+```bash
+make test
 ```
 
 Clean generated files:
