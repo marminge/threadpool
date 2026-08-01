@@ -1,0 +1,20 @@
+# Build output
+threadpool
+
+# Object files
+*.o
+
+# Debug symbols
+*.dSYM/
+
+# Core dumps
+core
+core.*
+
+# Temporary editor files
+*~
+*.swp
+*.swo
+
+# Generated compilation database (if you ever use Bear)
+compile_commands.json

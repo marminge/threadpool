@@ -1,0 +1,6 @@
+-Iinclude
+-std=c17
+-pthread
+-Wall
+-Wextra
+-Wpedantic
