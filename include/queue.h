@@ -22,16 +22,10 @@ struct queue {
 	bool queue_closed;
 };
 
-void queue_init(struct queue *queue);
-
-void queue_destroy(struct queue *queue);
+bool queue_init(struct queue *queue);
 
 bool queue_enqueue(struct queue *queue, struct task task);
 
 bool queue_dequeue(struct queue *queue, struct task *task);
-
-bool queue_is_empty(struct queue *queue);
-
-bool queue_is_full(struct queue *queue);
 
 #endif
