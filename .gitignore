@@ -1,5 +1,7 @@
 # Build output
 threadpool
+test_thread_pool
+example
 
 # Object files
 *.o
