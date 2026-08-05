@@ -17,15 +17,18 @@ bool queue_init(struct queue *queue) {
 	*queue = (struct queue){0};
 	if(pthread_mutex_init(&queue->mutex, NULL) != 0)
 		return false;
+
 	if(pthread_cond_init(&queue->not_empty, NULL) != 0) {
 		pthread_mutex_destroy(&queue->mutex);
 		return false;
 	}
+
 	if(pthread_cond_init(&queue->not_full, NULL) != 0) {
 		pthread_mutex_destroy(&queue->mutex);
 		pthread_cond_destroy(&queue->not_empty);
 		return false;
 	}
+
 	queue->queue_closed = false;
 
 	return true;
@@ -43,6 +46,7 @@ bool queue_enqueue(struct queue *queue, struct task task) {
 	while(queue_is_full(queue)) {
 		pthread_cond_wait(&queue->not_full, &queue->mutex);
 	}
+
 	queue->tasks[queue->rear] = task;
 	queue->rear = (queue->rear + 1) % MAX_QUEUE_SIZE;
 	queue->current_size++;
